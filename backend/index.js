@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { Pool } = require("pg");
 const cors = require("cors"); // Importo cors: [DOCUMENTAZIONE] https://www.npmjs.com/package/cors
+const validSizes = ["L", "S", "M"]; // definizione valori validi per size
 
 const app = express();
 const port = 5000;
@@ -33,6 +34,9 @@ app.get("/articles", async (req, res) => {
 //route per: creare un nuovo articolo // [INTEGRATA :) ]
 app.post("/articles", async (req, res) => {
   const { name, description, quantity, size } = req.body;
+  if (!validSizes.includes(size)) {
+    return res.status(400).send("Invalid size");
+  }
   try {
     const result = await pool.query(
       "INSERT INTO articles (name, description, quantity, size) VALUES ($1, $2, $3, $4) RETURNING *",
