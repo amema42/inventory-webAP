@@ -48,6 +48,10 @@ app.post("/articles", async (req, res) => {
 app.put("/articles/:id", async (req, res) => {
   const id = req.params.id;
   const { name, description, quantity, size } = req.body;
+  //aggiungo: controllo su: SIZE
+  if (!validSizes.includes(size)) {
+    return res.status(400).send("Invalid size");
+  }
   try {
     const result = await pool.query(
       "UPDATE articles SET name = $1, description = $2, quantity = $3, size = $4 WHERE id = $5 RETURNING *",
