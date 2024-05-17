@@ -1,42 +1,90 @@
-import React from 'react';
-import './App.css';
-import ArticleList from './ArticleList';
+import React, { useState } from "react";
+import ArticleList from "./ArticleList"; // Importa il componente ArticleList
 
 function App() {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [size, setSize] = useState("L");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newArticle = { name, description, quantity, size };
+
+    fetch("http://localhost:5000/articles", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newArticle),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        setName("");
+        setDescription("");
+        setQuantity("");
+        setSize("L");
+      })
+      .catch((error) => console.error("Error creating article:", error));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Inventory App</h1>
-        <ArticleList />
-      </header>
+    <div>
+      <h1>Inventory App</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            Name:
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Description:
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Quantity:
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Size:
+            <select
+              value={size}
+              onChange={(e) => setSize(e.target.value)}
+              required
+            >
+              <option value="L">L</option>
+              <option value="M">M</option>
+              <option value="S">S</option>
+            </select>
+          </label>
+        </div>
+        <button type="submit">Add Article</button>
+      </form>
+      <ArticleList /> {/* Includi il componente ArticleList */}
     </div>
   );
 }
 
 export default App;
-
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;

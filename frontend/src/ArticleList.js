@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
@@ -7,10 +7,10 @@ const ArticleList = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/articles');
+        const response = await axios.get("http://localhost:5000/articles");
         setArticles(response.data);
       } catch (error) {
-        console.error('Error fetching articles:', error);
+        console.error("Error fetching articles:", error);
       }
     };
 
@@ -21,11 +21,13 @@ const ArticleList = () => {
     <div>
       <h1>Articles</h1>
       <ul>
-        {articles.map(article => (
+        {articles.map((article) => (
           <li key={article.id}>
             <h2>{article.name}</h2>
             <p>{article.description}</p>
             <p>Quantity: {article.quantity}</p>
+            <p>Size: {article.size}</p>{" "}
+            {/* Aggiungi questa linea per mostrare la taglia */}
           </li>
         ))}
       </ul>
