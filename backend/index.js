@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { Pool } = require("pg");
-const cors = require("cors"); // Importa cors
+const cors = require("cors"); // Importo cors: [DOCUMENTAZIONE] https://www.npmjs.com/package/cors
 
 const app = express();
 const port = 5000;
 
 app.use(bodyParser.json());
-app.use(cors()); // Usa cors
+app.use(cors()); // Usa cors [reference: linea 4 di questa pagina]
 
 const pool = new Pool({
   connectionString:
@@ -15,12 +15,12 @@ const pool = new Pool({
     "postgres://user:password@database:5432/inventory",
 });
 
-// Rotta di esempio per testare il server
+// Rotta (route; ) di esempio per testare il server // il file route.js rimosso (non so fare/non funziona l'integrazione :)
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// Rotta per ottenere tutti gli articoli
+// route per: per ottenere tutti gli articoli
 app.get("/articles", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM articles");
@@ -30,7 +30,7 @@ app.get("/articles", async (req, res) => {
   }
 });
 
-// Rotta per creare un nuovo articolo
+//route per: creare un nuovo articolo // [INTEGRATA :) ]
 app.post("/articles", async (req, res) => {
   const { name, description, quantity, size } = req.body;
   try {
@@ -44,7 +44,7 @@ app.post("/articles", async (req, res) => {
   }
 });
 
-// Rotta per aggiornare un articolo esistente
+// route per:  per aggiornare un articolo esistente //da integrare in BackEnd e db
 app.put("/articles/:id", async (req, res) => {
   const id = req.params.id;
   const { name, description, quantity, size } = req.body;
@@ -63,7 +63,7 @@ app.put("/articles/:id", async (req, res) => {
   }
 });
 
-// Rotta per eliminare un articolo
+// route per:  per eliminare un articolo // da integrare nel (FrontEnd: ) e (db: postgress)
 app.delete("/articles/:id", async (req, res) => {
   const id = req.params.id;
   try {

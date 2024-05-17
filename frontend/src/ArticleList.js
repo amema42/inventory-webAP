@@ -27,7 +27,7 @@ const ArticleList = () => {
             <p>{article.description}</p>
             <p>Quantity: {article.quantity}</p>
             <p>Size: {article.size}</p>{" "}
-            {/* Aggiungi questa linea per mostrare la taglia */}
+            {/* utility? : questa linea: per mostrare la taglia */}
           </li>
         ))}
       </ul>

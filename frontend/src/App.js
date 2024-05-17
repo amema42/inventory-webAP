@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div>
-      <h1>Inventory App</h1>
+      <h1>Inventory App v.0.1</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>
@@ -82,7 +82,7 @@ function App() {
         </div>
         <button type="submit">Add Article</button>
       </form>
-      <ArticleList /> {/* Includi il componente ArticleList */}
+      <ArticleList /> {/* qui è inclusa la componente Article List */}
     </div>
   );
 }
