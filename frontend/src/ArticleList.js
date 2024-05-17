@@ -4,6 +4,9 @@ import axios from "axios";
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
   const [editingArticle, setEditingArticle] = useState(null);
+  //history & statistics
+  const [history, setHistory] = useState(null);
+  const [statistics, setStatistics] = useState(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -18,15 +21,38 @@ const ArticleList = () => {
     fetchArticles();
   }, []);
 
-  const handleDelete = async (id) => {
-      try {
-        await axios.delete(`http://localhost:5000/articles/${id}`);
-        setArticles(articles.filter(article => article.id !== id));
-      } catch (error) {
-        console.error('Error deleting article:', error);
-      }
-    };
+  const viewHistory = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/articles/${id}/history`,
+      );
+      setHistory(response.data); // imposta lo storico nello stato (history) (non sono sicuro serva)
+      console.log(response.data); // Visualizza/in output lo storico su console (non sono sicuro serva)
+    } catch (error) {
+      console.error("Error fetching history:", error);
+    }
+  };
 
+  const viewStatistics = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/articles/${id}/statistics`,
+      );
+      setStatistics(response.data); // imposta statistiche nello stato; (non sono sicuro serva)
+      console.log(response.data); // statistiche in output su console ((non sono sicuro serva))
+    } catch (error) {
+      console.error("Error fetching statistics:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/articles/${id}`);
+      setArticles(articles.filter((article) => article.id !== id));
+    } catch (error) {
+      console.error("Error deleting article:", error);
+    }
+  };
 
   const handleEdit = (article) => {
     setEditingArticle(article);
@@ -43,9 +69,13 @@ const ArticleList = () => {
         size,
       });
       setArticles(
-        articles.map((article) =>
-          article.id === id ? response.data : article,
-        ),
+        articles.map((article) => {
+          if (article.id === id) {
+            return response.data; // if l'articolo ha lo stesso :id di quello che vogliamo aggiornare -> sostituiamo con i nuovi dati.
+          } else {
+            return article; // altrimenti ltrimenti: -> manteniamo l'articolo così com'era.
+          }
+        }),
       );
       setEditingArticle(null);
     } catch (error) {
@@ -73,6 +103,12 @@ const ArticleList = () => {
             <p>Size: {article.size}</p>
             <button onClick={() => handleEdit(article)}>Edit</button>
             <button onClick={() => handleDelete(article.id)}>Delete</button>
+            <button onClick={() => viewHistory(article.id)}>
+              View History
+            </button>
+            <button onClick={() => viewStatistics(article.id)}>
+              View Statistics
+            </button>
           </li>
         ))}
       </ul>
@@ -131,6 +167,27 @@ const ArticleList = () => {
           </div>
           <button type="submit">Update Article</button>
         </form>
+      )}
+      {history && (
+        <div>
+          <h2>History</h2>
+          <ul>
+            {history.map((entry) => (
+              <li key={entry.id}>
+                {entry.action_date}: {entry.action_type} - {entry.details}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {statistics && (
+        <div>
+          <h2>Statistics</h2>
+          <p>Total Actions: {statistics.total_actions}</p>
+          <p>Total Created: {statistics.total_created}</p>
+          <p>Total Updated: {statistics.total_updated}</p>
+          <p>Total Deleted: {statistics.total_deleted}</p>
+        </div>
       )}
     </div>
   );

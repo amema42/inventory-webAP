@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// route per: per ottenere tutti gli articoli
+// route per: ottenere tutti gli articoli
 app.get("/articles", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM articles");
@@ -41,6 +41,13 @@ app.post("/articles", async (req, res) => {
     const result = await pool.query(
       "INSERT INTO articles (name, description, quantity, size) VALUES ($1, $2, $3, $4) RETURNING *",
       [name, description, quantity, size],
+    );
+    await pool.query(
+      "INSERT INTO history (article_id, action_type, details) VALUES ($1, 'create', $2)",
+      [
+        result.rows[0].id,
+        `Created article with quantity ${quantity} and size ${size}`,
+      ],
     );
     res.status(201).send(result.rows[0]);
   } catch (err) {
@@ -62,6 +69,10 @@ app.put("/articles/:id", async (req, res) => {
       [name, description, quantity, size, id],
     );
     if (result.rows.length > 0) {
+      await pool.query(
+        "INSERT INTO history (article_id, action_type, details) VALUES ($1, 'update', $2)",
+        [id, `Updated article to quantity ${quantity} and size ${size}`],
+      );
       res.send(result.rows[0]);
     } else {
       res.status(404).send("Article not found");
@@ -80,6 +91,10 @@ app.delete("/articles/:id", async (req, res) => {
       [id],
     );
     if (result.rows.length > 0) {
+      await pool.query(
+        "INSERT INTO history (article_id, action_type, details) VALUES ($1, 'delete', $2)",
+        [id, `Deleted article with name ${result.rows[0].name}`],
+      );
       res.send(result.rows[0]);
     } else {
       res.status(404).send("Article not found");
@@ -89,6 +104,52 @@ app.delete("/articles/:id", async (req, res) => {
   }
 });
 
+//Storico (1) e statistiche (2)
+
+app.get("/articles/:id/history", async (req, res) => {
+  const articleId = req.params.id;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM history WHERE article_id = $1 ORDER BY action_date DESC",
+      [articleId],
+    );
+    res.send(result.rows);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+//(2) statistiche
+app.get("/articles/:id/statistics", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const totalActions = await pool.query(
+      "SELECT COUNT(*) FROM history WHERE article_id = $1",
+      [id],
+    );
+    const totalCreated = await pool.query(
+      "SELECT COUNT(*) FROM history WHERE article_id = $1 AND action_type = 'created'",
+      [id],
+    );
+    const totalUpdated = await pool.query(
+      "SELECT COUNT(*) FROM history WHERE article_id = $1 AND action_type = 'updated'",
+      [id],
+    );
+    const totalDeleted = await pool.query(
+      "SELECT COUNT(*) FROM history WHERE article_id = $1 AND action_type = 'deleted'",
+      [id],
+    );
+    const statistics = {
+      total_actions: totalActions.rows[0].count,
+      total_created: totalCreated.rows[0].count,
+      total_updated: totalUpdated.rows[0].count,
+      total_deleted: totalDeleted.rows[0].count,
+    };
+    res.send(statistics);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
