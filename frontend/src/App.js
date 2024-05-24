@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ArticleList from "./ArticleList"; // Importa il componente ArticleList
+import ArticleList from "./ArticleList"; // import: componente ArticleList, definito in src/ArticleList.js
 
 function App() {
   const [name, setName] = useState("");
@@ -82,7 +82,8 @@ function App() {
         </div>
         <button type="submit">Add Article</button>
       </form>
-      <ArticleList /> {/* qui è inclusa la componente Article List */}
+      <ArticleList />{" "}
+      {/* dopo il casino di struttura sopra, aggiungo Article List qui (da Sistemare in FrontEnd) */}
     </div>
   );
 }

@@ -71,7 +71,7 @@ const ArticleList = () => {
       setArticles(
         articles.map((article) => {
           if (article.id === id) {
-            return response.data; // if l'articolo ha lo stesso :id di quello che vogliamo aggiornare -> sostituiamo con i nuovi dati.
+            return response.data; // if (l'articolo) ha lo stesso :id di quello che vogliamo aggiornare -> sostituiamo con i nuovi dati.
           } else {
             return article; // altrimenti ltrimenti: -> manteniamo l'articolo così com'era.
           }

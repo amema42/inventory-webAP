@@ -55,7 +55,7 @@ app.post("/articles", async (req, res) => {
   }
 });
 
-// route per:  per aggiornare un articolo esistente //da integrare in BackEnd e db
+// route per:  per aggiornare un articolo esistente //da integrare in BackEend e db
 app.put("/articles/:id", async (req, res) => {
   const id = req.params.id;
   const { name, description, quantity, size } = req.body;
