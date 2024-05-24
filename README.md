@@ -64,9 +64,10 @@ Instructions on how to set up and run the project locally, including Docker setu
 1. Clone the repository.
 2. Navigate to the project directory.
 3. Build and run the Docker containers:
-   ```sh
-   docker-compose up --build
-   ```
+
+```sh
+docker-compose up --build
+```
 4. Access the application at `http://localhost:3000`.
 
 ### Database Setup
@@ -83,7 +84,7 @@ Detailed explanation of the backend setup and functionality.
 ### Overview
 The backend is built using Node.js and Express. It handles API requests from the frontend and interacts with the PostgreSQL database.
 
-### File: `back/index.js`
+### File: `index.js`
 This file sets up the Express server and defines the API endpoints.
 
 #### Key Sections:
