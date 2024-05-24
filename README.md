@@ -47,13 +47,7 @@ inventory-webAPP_v0/
     │   ├── index.js
     │   └── articlelist.js
 ```
-```
 
-#### 3. Setting Up the Project
-Instructions on how to set up and run the project locally, including Docker setup.
-
-**Example:**
-```
 ## Setting Up the Project
 
 ### Prerequisites
@@ -72,13 +66,7 @@ docker-compose up --build
 
 ### Database Setup
 The `init.sql` file in the `database` directory initializes the PostgreSQL database with the required schema.
-```
 
-#### 4. Backend (Node.js with Express)
-Detailed explanation of the backend setup and functionality.
-
-**Example:**
-```
 ## Backend
 
 ### Overview
