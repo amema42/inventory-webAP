@@ -126,13 +126,7 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 ```
-```
 
-#### 5. Frontend (React)
-Explanation of the frontend components and their roles.
-
-**Example:**
-```
 ## Frontend
 
 ### Overview
@@ -195,19 +189,13 @@ function ArticleList() {
 
 export default ArticleList;
 ```
-```
 
-#### 6. Database (PostgreSQL)
-Details on the database schema and initialization.
-
-**Example:**
-```
 ## Database
 
 ### Overview
 The database is a PostgreSQL instance that stores inventory items.
 
-### File: `database/init.sql`
+#### File: `database/init.sql`
 This file contains the SQL commands to set up the initial database schema.
 
 #### Example Code:
@@ -223,5 +211,4 @@ INSERT INTO items (name, quantity, price) VALUES
 ('Item1', 10, 9.99),
 ('Item2', 20, 19.99),
 ('Item3', 30, 29.99);
-```
 ```
