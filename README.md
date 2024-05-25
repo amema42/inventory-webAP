@@ -24,17 +24,18 @@ This inventory web application allows users to manage and track their inventory 
 - React
 - Docker
 ```
-Node.js, a JavaScript runtime for server-side scripting (Node.js Documentation). It uses Express, a framework to handle HTTP requests and set up API endpoints (Express Documentation).
 
-CORS: Middleware for enabling cross-origin resource sharing, allowing frontend-backend communication from different origins (CORS Documentation).
+**Node.js**, a JavaScript runtime for server-side scripting ([Node.js Documentation](https://nodejs.org/en/docs/)). It uses **Express**, a framework to handle HTTP requests and set up API endpoints ([Express Documentation](https://expressjs.com/)).
 
-pg: A PostgreSQL client for Node.js, managing connections and queries (pg Documentation).
+**CORS**: Middleware for enabling cross-origin resource sharing, allowing frontend-backend communication from different origins ([CORS Documentation](https://expressjs.com/en/resources/middleware/cors.html)).
 
-The database is a PostgreSQL instance for storing inventory data (PostgreSQL Documentation). The schema is initialized using SQL commands in init.sql.
+**pg**: A PostgreSQL client for Node.js, managing connections and queries ([pg Documentation](https://node-postgres.com/)).
 
-React, a library for building user interfaces (React Documentation). The main frontend components include App.js for routing using React Router (React Router Documentation) and ArticleList.js.
+The database is a **PostgreSQL** instance for storing inventory data ([PostgreSQL Documentation](https://www.postgresql.org/docs/)). The schema is initialized using SQL commands in `init.sql`.
 
-The entire application is dockerized for consistency and ease of deployment. Docker is a platform for developing, shipping, and running applications in containers (Docker Documentation).
+**React**, a library for building user interfaces ([React Documentation](https://reactjs.org/docs/getting-started.html)). The main frontend components include `App.js` for routing using **React Router** ([React Router Documentation](https://reactrouter.com/)) and `ArticleList.js`.
+
+The entire application is dockerized for consistency and ease of deployment. **Docker** is a platform for developing, shipping, and running applications in containers ([Docker Documentation](https://docs.docker.com/)).
 
 #### 2. Project Structure
 Detail the structure of the project directories and files.
