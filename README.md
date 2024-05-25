@@ -291,7 +291,7 @@ INSERT INTO items (name, quantity, price) VALUES
 ('Item3', 30, 29.99);
 ```
 
-### Summary
+## Summary
 
 - **Backend**: Node.js with Express handles API requests and interacts with PostgreSQL.
     - **Express Server**: Receives API requests from the frontend.
