@@ -71,6 +71,9 @@ The `init.sql` file in the `database` directory initializes the PostgreSQL datab
 
 ### Overview
 The backend is built using Node.js and Express. It handles API requests from the frontend and interacts with the PostgreSQL database.
+- **express**: A web framework for Node.js to handle HTTP requests.
+- **cors**: Middleware to enable Cross-Origin Resource Sharing, allowing your frontend to communicate with the backend from a different origin.
+- **pg**: PostgreSQL client for Node.js to interact with the database.
 
 ### File: `index.js`
 This file sets up the Express server and defines the API endpoints.
@@ -78,10 +81,15 @@ This file sets up the Express server and defines the API endpoints.
 #### Key Sections:
 - **Imports and Middleware:** Imports necessary modules and sets up middleware (CORS, JSON parsing).
 - **Database Connection:** Establishes a connection to the PostgreSQL database.
-- **API Endpoints:** Defines routes for handling API requests.
+- **API Endpoints:*** Defines routes for handling API requests.
+- ***GET /api/items**: Fetches all items from the `items` table in the database.
+    - `pool.query('SELECT * FROM items')`: Executes a SQL query to get all items.
+    - `res.json(result.rows)`: Sends the query results as a JSON response.
+- ***app.listen(port, () => { ... })***: Starts the server on port 3001.
 
 #### Example Code:
 ```javascript
+// The backend initializes an Express server and sets up middleware
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
@@ -92,19 +100,20 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
+// sets up a connection to the PostgreSQL database using pg
 const pool = new Pool({
   user: 'user',
   host: 'localhost',
   database: 'inventory',
   password: 'password',
   port: 5432,
-});
+}); // Pool: Manages connections to the PostgreSQL database. It uses connection pooling to efficiently manage multiple database connections.
 
-// Example endpoint
-app.get('/api/items', async (req, res) => {
+// Example endpoint: Defines endpoints to handle API requests. For example, fetching inventory items.
+app.get('/api/items', async (req, res) => { // Fetches all items from the items table in the database.
   try {
     const result = await pool.query('SELECT * FROM items');
-    res.json(result.rows);
+    res.json(result.rows); // Executes a SQL query to get all items.
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
@@ -112,7 +121,7 @@ app.get('/api/items', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`); // Starts the server on port 3001.
 });
 ```
 
@@ -125,7 +134,8 @@ The frontend is built using React. It provides a user interface for interacting 
 
 #### 1. `app.js`
 This is the main component that sets up the overall layout and routing for the application.
-
+- **BrowserRouter**, **Route**, **Switch**: Components from `react-router-dom` to handle routing.
+- **ArticleList**: A component that lists articles.
 #### Example Code:
 ```javascript
 import React from 'react';
