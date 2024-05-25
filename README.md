@@ -1,5 +1,5 @@
 ### Project Structure
-### a very repetitive one, I know
+##### a very repetitive one, I know
 This project is organized into three main directories:
 1. `database` - Contains `init.sql` for setting up a PostgreSQL database.
 2. `back` - Contains `index.js`, the backend code using Node.js, Express, and CORS.
