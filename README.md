@@ -202,7 +202,7 @@ Data Display: The ArticleList component receives the data and renders the list o
 
 ### Overview
 The frontend is built using React. It provides a user interface for interacting with the inventory items.
-
+React's graphics components are work in progress
 ### Components
 
 #### 1. `app.js`
