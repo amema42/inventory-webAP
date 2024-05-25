@@ -24,6 +24,17 @@ This inventory web application allows users to manage and track their inventory 
 - React
 - Docker
 ```
+Node.js, a JavaScript runtime for server-side scripting (Node.js Documentation). It uses Express, a framework to handle HTTP requests and set up API endpoints (Express Documentation).
+
+CORS: Middleware for enabling cross-origin resource sharing, allowing frontend-backend communication from different origins (CORS Documentation).
+
+pg: A PostgreSQL client for Node.js, managing connections and queries (pg Documentation).
+
+The database is a PostgreSQL instance for storing inventory data (PostgreSQL Documentation). The schema is initialized using SQL commands in init.sql.
+
+React, a library for building user interfaces (React Documentation). The main frontend components include App.js for routing using React Router (React Router Documentation) and ArticleList.js.
+
+The entire application is dockerized for consistency and ease of deployment. Docker is a platform for developing, shipping, and running applications in containers (Docker Documentation).
 
 #### 2. Project Structure
 Detail the structure of the project directories and files.
@@ -43,9 +54,9 @@ inventory-webAPP_v0/
 │
 └── front/
     ├── src/
-    │   ├── app.js
+    │   ├── App.js
     │   ├── index.js
-    │   └── articlelist.js
+    │   └── Articlelist.js
 ```
 
 ## Setting Up the Project
@@ -81,8 +92,8 @@ This file sets up the Express server and defines the API endpoints.
 #### Key Sections:
 - **Imports and Middleware:** Imports necessary modules and sets up middleware (CORS, JSON parsing).
 - **Database Connection:** Establishes a connection to the PostgreSQL database.
-- **API Endpoints:*** Defines routes for handling API requests.
-- ***GET /api/items**: Fetches all items from the `items` table in the database.
+- **API Endpoints:** Defines routes for handling API requests.
+- **GET /api/items**: Fetches all items from the `items` table in the database.
     - `pool.query('SELECT * FROM items')`: Executes a SQL query to get all items.
     - `res.json(result.rows)`: Sends the query results as a JSON response.
 - ***app.listen(port, () => { ... })***: Starts the server on port 3001.
@@ -158,7 +169,13 @@ export default App;
 ```
 
 #### 2. `articlelist.js`
-This component fetches and displays a list of inventory items.
+This component fetches and displays a list of inventory items from the Backend
+
+- **useState**: React hook to manage state.
+- **useEffect**: React hook to perform side effects (fetching data) on component mount.
+- **fetch('http://localhost:3001/api/items')**: Makes an HTTP GET request to the backend to fetch items.
+- **setArticles(data)**: Updates the state with fetched data.
+- **articles.map(article => ...)**: Renders a list of articles.
 
 #### Example Code:
 ```javascript
@@ -211,3 +228,26 @@ INSERT INTO items (name, quantity, price) VALUES
 ('Item2', 20, 19.99),
 ('Item3', 30, 29.99);
 ```
+
+### Summary
+
+- **Backend**: Node.js with Express handles API requests and interacts with PostgreSQL.
+    - **Express Server**: Receives API requests from the frontend.
+    - **Database Connection**: Uses **`pg`** module to connect to the PostgreSQL database.
+    - **API Endpoints**: Handle CRUD (create, read, update, e delete) operations (e.g., fetching items from the database).
+- **Frontend**: React components display inventory items and interact with the backend. (ArticleList Component: Makes API requests to the backend to fetch data and displays it )
+- **Database**: PostgreSQL stores inventory data, initialized with `init.sql`.
+
+This setup ensures a seamless flow of data between the frontend, backend, and database, providing a functional and interactive inventory management application.
+
+### **Detailed Interaction Example**
+
+1. **User Interaction**: User opens the application and the **`ArticleList`** component is mounted.
+2. **API Request**: The **`ArticleList`** component's **`useEffect`** hook triggers an API request to **`http://localhost:3001/api/items`**.
+3. **Backend Handling**:
+    - The Express server listens for the request on the **`/api/items`** endpoint.
+    - It uses the **`pg`** module to query the **`items`** table in the PostgreSQL database.
+4. **Database Query**: The query **`SELECT * FROM items`** is executed on the **`items`** table.
+5. **Data Retrieval**: The database returns the result set to the backend.
+6. **API Response**: The backend sends the result set as a JSON response back to the frontend.
+7. **Data Display**: The **`ArticleList`** component receives the data and renders the list of items.
