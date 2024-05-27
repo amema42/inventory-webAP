@@ -26,5 +26,6 @@ INSERT INTO articles (name, description, quantity, size) VALUES
 ALTER TABLE history DROP CONSTRAINT history_article_id_fkey;
 
 -- aggiungo il nuovo ***vincolo*** di chiave esterna con ON DELETE CASCADE
+-- app.delete -> in backend/index.js modificata (aggiunto controllo per delete article)
 ALTER TABLE history
 ADD CONSTRAINT history_article_id_fkey FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE;
