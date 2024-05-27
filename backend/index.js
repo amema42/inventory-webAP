@@ -82,6 +82,7 @@ app.put("/articles/:id", async (req, res) => {
   }
 });
 
+//app.delete updated && database/init.sql updated - aggiunto controllo per app.delete
 app.delete("/articles/:id", async (req, res) => {
   const id = req.params.id;
   try {
