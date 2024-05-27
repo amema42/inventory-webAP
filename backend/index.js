@@ -82,23 +82,34 @@ app.put("/articles/:id", async (req, res) => {
   }
 });
 
-// route per:  per eliminare un articolo // da integrare nel (FrontEnd: ) e (db: postgress)
 app.delete("/articles/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    const result = await pool.query(
+    // cerco di trovare l'articolo l'articolo prima di eliminarlo
+    const articleResult = await pool.query(
+      "SELECT * FROM articles WHERE id = $1",
+      [id],
+    );
+
+    if (articleResult.rows.length === 0) {
+      return res.status(404).send("Article not found");
+    }
+
+    const article = articleResult.rows[0];
+
+    // inserisco un record nella tabella history prima di eliminare l'articolo
+    await pool.query(
+      "INSERT INTO history (article_id, action_type, details) VALUES ($1, 'delete', $2)",
+      [id, `Deleted article with name ${article.name}`],
+    );
+
+    // elimino l'articolo
+    const deleteResult = await pool.query(
       "DELETE FROM articles WHERE id = $1 RETURNING *",
       [id],
     );
-    if (result.rows.length > 0) {
-      await pool.query(
-        "INSERT INTO history (article_id, action_type, details) VALUES ($1, 'delete', $2)",
-        [id, `Deleted article with name ${result.rows[0].name}`],
-      );
-      res.send(result.rows[0]);
-    } else {
-      res.status(404).send("Article not found");
-    }
+
+    res.send(deleteResult.rows[0]);
   } catch (err) {
     res.status(500).send(err.message);
   }

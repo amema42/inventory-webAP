@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./App.css"; /* importing style in CSS, this should fix the articles on Screen (update: Not true, still have to fix)*/
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
   const [editingArticle, setEditingArticle] = useState(null);
-  //history & statistics
   const [history, setHistory] = useState(null);
   const [statistics, setStatistics] = useState(null);
+  const [activeArticleId, setActiveArticleId] =
+    useState(
+      null,
+    ); /* for history & statistics: modifica: stato per memorizzare l'id dell'articolo "attivo" */
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -26,8 +30,9 @@ const ArticleList = () => {
       const response = await axios.get(
         `http://localhost:5000/articles/${id}/history`,
       );
-      setHistory(response.data); // imposta lo storico nello stato (history) (non sono sicuro serva)
-      console.log(response.data); // Visualizza/in output lo storico su console (non sono sicuro serva)
+      setHistory(response.data);
+      setActiveArticleId(id); // imposto l'ID dell'articolo "attivo"
+      setStatistics(null); // aggiungo: pulisco le statistiche per evitare sovrapposizioni
     } catch (error) {
       console.error("Error fetching history:", error);
     }
@@ -38,8 +43,9 @@ const ArticleList = () => {
       const response = await axios.get(
         `http://localhost:5000/articles/${id}/statistics`,
       );
-      setStatistics(response.data); // imposta statistiche nello stato; (non sono sicuro serva)
-      console.log(response.data); // statistiche in output su console ((non sono sicuro serva))
+      setStatistics(response.data);
+      setActiveArticleId(id); // imposta l'ID dell'articolo attivo
+      setHistory(Error); // aggiungo: pulisce la cronologia per evitare sovvrapposizioni
     } catch (error) {
       console.error("Error fetching statistics:", error);
     }
@@ -71,13 +77,16 @@ const ArticleList = () => {
       setArticles(
         articles.map((article) => {
           if (article.id === id) {
-            return response.data; // if (l'articolo) ha lo stesso :id di quello che vogliamo aggiornare -> sostituiamo con i nuovi dati.
+            return response.data;
           } else {
-            return article; // altrimenti ltrimenti: -> manteniamo l'articolo così com'era.
+            return article;
           }
         }),
       );
       setEditingArticle(null);
+      setActiveArticleId(null); // resetta l'articolo attivo
+      setHistory(null); // reset cronologia
+      setStatistics(null); // reset statistiche
     } catch (error) {
       console.error("Error updating article:", error);
     }
@@ -94,24 +103,59 @@ const ArticleList = () => {
   return (
     <div>
       <h1>Articles</h1>
-      <ul>
+      <div className="article-list">
+        {/*contenitore per la list degli articoli */}
         {articles.map((article) => (
-          <li key={article.id}>
-            <h2>{article.name}</h2>
-            <p>{article.description}</p>
-            <p>Quantity: {article.quantity}</p>
-            <p>Size: {article.size}</p>
-            <button onClick={() => handleEdit(article)}>Edit</button>
-            <button onClick={() => handleDelete(article.id)}>Delete</button>
-            <button onClick={() => viewHistory(article.id)}>
-              View History
-            </button>
-            <button onClick={() => viewStatistics(article.id)}>
-              View Statistics
-            </button>
-          </li>
+          <div className="article" key={article.id}>
+            {/* "?classe" per ogni articolo */}
+            <div className="article-content">
+              {/* contenitore per il contenuto "principale" */}
+              <h2>{article.name}</h2>
+              <p>{article.description}</p>
+              <p>Quantity: {article.quantity}</p>
+              <p>Size: {article.size}</p>
+              <div className="article-buttons">
+                {/*contenitore per i pulsanti */}
+                <button onClick={() => handleEdit(article)}>Edit</button>
+                <button onClick={() => handleDelete(article.id)}>Delete</button>
+                <button onClick={() => viewHistory(article.id)}>
+                  View History
+                </button>
+                <button onClick={() => viewStatistics(article.id)}>
+                  View Statistics
+                </button>
+              </div>
+            </div>
+            {activeArticleId === article.id &&
+              history &&
+              Array.isArray(history) && ( //mostra la cronologia solo per l'articolo attivo
+                <div className="article-details">
+                  {/* Modifica: contenitore per i dettagli */}
+                  <h3>History</h3>
+                  <ul>
+                    {history.map((entry) => (
+                      <li key={entry.id}>
+                        {entry.action_date}: {entry.action_type} -{" "}
+                        {entry.details}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            {activeArticleId === article.id &&
+              statistics && ( //mostra le statistiche solo per l'articolo "attivo"
+                <div className="article-details">
+                  {/* Modifica: contenitore per i dettagli */}
+                  <h3>Statistics</h3>
+                  <p>Total Actions: {statistics.total_actions}</p>
+                  <p>Total Created: {statistics.total_created}</p>
+                  <p>Total Updated: {statistics.total_updated}</p>
+                  <p>Total Deleted: {statistics.total_deleted}</p>
+                </div>
+              )}
+          </div>
         ))}
-      </ul>
+      </div>
       {editingArticle && (
         <form onSubmit={handleUpdate}>
           <div>
@@ -167,27 +211,6 @@ const ArticleList = () => {
           </div>
           <button type="submit">Update Article</button>
         </form>
-      )}
-      {history && (
-        <div>
-          <h2>History</h2>
-          <ul>
-            {history.map((entry) => (
-              <li key={entry.id}>
-                {entry.action_date}: {entry.action_type} - {entry.details}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {statistics && (
-        <div>
-          <h2>Statistics</h2>
-          <p>Total Actions: {statistics.total_actions}</p>
-          <p>Total Created: {statistics.total_created}</p>
-          <p>Total Updated: {statistics.total_updated}</p>
-          <p>Total Deleted: {statistics.total_deleted}</p>
-        </div>
       )}
     </div>
   );

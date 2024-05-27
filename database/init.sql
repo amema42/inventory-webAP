@@ -21,3 +21,10 @@ INSERT INTO articles (name, description, quantity, size) VALUES
 ('Article 1', 'Description for Article 1', 10, 'L'),
 ('Article 2', 'Description for Article 2', 20, 'S'),
 ('Article 3', 'Description for Article 3', 30, 'M');
+
+-- Rimuovi il vincolo di chiave esterna esistente
+ALTER TABLE history DROP CONSTRAINT history_article_id_fkey;
+
+-- aggiungo il nuovo ***vincolo*** di chiave esterna con ON DELETE CASCADE
+ALTER TABLE history
+ADD CONSTRAINT history_article_id_fkey FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE;

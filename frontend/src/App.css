@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,128 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+body {
+    /*font-family: Arial, sans-serif;*/
+    font-family: "Comic Sans MS", cursive;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    margin: 50px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%; /*Imposta larghezza al 100% per coprire il contenitore */
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    /* border-radius: 4px; */
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+/*.article-list styling :) */
+.article-list {
+    display: flex; /*flexible */
+    flex-wrap: wrap; /*per andare andare a capo (sono stanco capo :) se lo spazio e' insufficiente */
+    justify-content: space-between; /*space between instead of centred should work*/
+    margin: 50px auto;
+    max-width: 1000px;
+    gap: 20px; /*? - lo stesso spazio tra gli articoli rr. 100*/
+}
+
+.article {
+    border: 1px solid black; /*adding a border for every article/card */
+    background-color: #fff;
+    padding: 10px;
+    margin: auto; /*imposto questo in : auto - mi risolve tutti i problemi, forse dovrei studiarlo un minimo CSS*/
+    /*margin-bottom: 10px;*/
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    width: calc(
+        33.333% - 20px
+    ); /*rr 116 eliminata*/ /* does not SODDISFA LE MIE ASPETTATIVE*/
+    box-sizing: border-box; /*include padding e bordo in larghezza e altezza*/
+    flex: 1 1 calc(33.333% - 20px); /* 3 periodc - gap? (aggiusta la larghezza delle colonne per visualizzare gli articoli per riga, flex: 3 articoli per riga)*/
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);*/
+    display: flex; /*utilizzo di flex per il contenitore dell'articolo*/
+    flex-direction: column; /*disposizione verticale degli elementi*/
+}
+.article-content {
+    flex-grow: 1; /*per permettere al contenuto principale di riempire lo spazio disponibile*/
+}
+
+article-details {
+    margin-top: 10px; /*margine superiore per i dettagli*/
+}
+.article h2 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.article p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.article-buttons {
+    display: flex; /*utilizzo di flexbox per i bottoni*/
+    flex-wrap: wrap;
+    gap: 5px; /*spazio tra i bottoni*/
+    margin-top: auto;
+}
+
+.article-buttons button {
+    flex: 1;
+}
+
+/*setting for history & satistics - ADDITIONAL*/
+h3 {
+    margin-top: 10px;
+}
+li {
+    margin-bottom: 5px;
+}
+ul {
+    list-style-type: none; /*rimozione dei dot (.) puntini dalla lista*/
+    padding: 0;
 }

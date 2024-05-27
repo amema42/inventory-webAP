@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ArticleList from "./ArticleList"; // import: componente ArticleList, definito in src/ArticleList.js
+import "./App.css"; //importing style in CSS
 
 function App() {
   const [name, setName] = useState("");
