@@ -96,11 +96,9 @@ button:hover {
 }
 /*.article-list styling :) */
 .article-list {
-    display: flex; /*flexible */
-    flex-wrap: wrap; /*per andare andare a capo (sono stanco capo :) se lo spazio e' insufficiente */
-    justify-content: space-between; /*space between instead of centred should work*/
-    margin: 50px auto;
-    max-width: 1000px;
+    display: grid; /*flexible */
+    grid-template-columns: repeat(3, 1fr);
+    padding: 10px;
     gap: 20px; /*? - lo stesso spazio tra gli articoli rr. 100*/
 }
 
@@ -112,9 +110,6 @@ button:hover {
     /*margin-bottom: 10px;*/
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    width: calc(
-        33.333% - 20px
-    ); /*rr 116 eliminata*/ /* does not SODDISFA LE MIE ASPETTATIVE*/
     box-sizing: border-box; /*include padding e bordo in larghezza e altezza*/
     flex: 1 1 calc(33.333% - 20px); /* 3 periodc - gap? (aggiusta la larghezza delle colonne per visualizzare gli articoli per riga, flex: 3 articoli per riga)*/
     /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);*/
