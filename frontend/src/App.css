@@ -49,14 +49,24 @@ h1 {
     text-align: center;
     color: #333;
 }
-
+.formSubmit {
+    width: 33.333%;
+    display: block;
+    margin: 0 auto;
+}
 form {
+    border: 1px solid black; /*adding a border for every article/card */
     background-color: #fff;
-    padding: 20px;
-    margin: 50px auto;
+    padding: 10px;
+    margin: auto; /*imposto questo in : auto - mi risolve tutti i problemi, forse dovrei studiarlo un minimo CSS*/
+    /*margin-bottom: 10px;*/
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; /*include padding e bordo in larghezza e altezza*/
+    flex: 1 1 calc(33.333% - 20px); /* 3 periodc - gap? (aggiusta la larghezza delle colonne per visualizzare gli articoli per riga, flex: 3 articoli per riga)*/
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);*/
+    display: flex; /*utilizzo di flex per il contenitore dell'articolo*/
+    flex-direction: column; /*disposizione verticale degli elementi*/
 }
 
 form div {

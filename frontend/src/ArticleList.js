@@ -45,7 +45,7 @@ const ArticleList = () => {
       );
       setStatistics(response.data);
       setActiveArticleId(id); // imposta l'ID dell'articolo attivo
-      setHistory(Error); // aggiungo: pulisce la cronologia per evitare sovvrapposizioni
+      setHistory(null); // aggiungo: pulisce la cronologia per evitare sovvrapposizioni
     } catch (error) {
       console.error("Error fetching statistics:", error);
     }
@@ -61,7 +61,8 @@ const ArticleList = () => {
   };
 
   const handleEdit = (article) => {
-    setEditingArticle(article);
+    setEditingArticle(article); //id: articolo IN MODIFICA
+    setActiveArticleId(article.id);
   };
 
   const handleUpdate = async (e) => {
@@ -104,33 +105,87 @@ const ArticleList = () => {
     <div>
       <h1>Articles</h1>
       <div className="article-list">
-        {/*contenitore per la list degli articoli */}
         {articles.map((article) => (
           <div className="article" key={article.id}>
-            {/* "?classe" per ogni articolo */}
-            <div className="article-content">
-              {/* contenitore per il contenuto "principale" */}
-              <h2>{article.name}</h2>
-              <p>{article.description}</p>
-              <p>Quantity: {article.quantity}</p>
-              <p>Size: {article.size}</p>
-              <div className="article-buttons">
-                {/*contenitore per i pulsanti */}
-                <button onClick={() => handleEdit(article)}>Edit</button>
-                <button onClick={() => handleDelete(article.id)}>Delete</button>
-                <button onClick={() => viewHistory(article.id)}>
-                  View History
-                </button>
-                <button onClick={() => viewStatistics(article.id)}>
-                  View Statistics
-                </button>
+            {activeArticleId === article.id && editingArticle === article ? (
+              <form onSubmit={handleUpdate}>
+                <div>
+                  <label>
+                    Name:
+                    <input
+                      type="text"
+                      name="name"
+                      value={editingArticle.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Description:
+                    <input
+                      type="text"
+                      name="description"
+                      value={editingArticle.description}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Quantity:
+                    <input
+                      type="number"
+                      name="quantity"
+                      value={editingArticle.quantity}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Size:
+                    <select
+                      name="size"
+                      value={editingArticle.size}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="L">L</option>
+                      <option value="M">M</option>
+                      <option value="S">S</option>
+                    </select>
+                  </label>
+                </div>
+                <button type="submit">Update Article</button>
+              </form>
+            ) : (
+              <div className="article-content">
+                <h2>{article.name}</h2>
+                <p>{article.description}</p>
+                <p>Quantity: {article.quantity}</p>
+                <p>Size: {article.size}</p>
+                <div className="article-buttons">
+                  <button onClick={() => handleEdit(article)}>Edit</button>
+                  <button onClick={() => handleDelete(article.id)}>
+                    Delete
+                  </button>
+                  <button onClick={() => viewHistory(article.id)}>
+                    View History
+                  </button>
+                  <button onClick={() => viewStatistics(article.id)}>
+                    View Statistics
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
             {activeArticleId === article.id &&
               history &&
-              Array.isArray(history) && ( //mostra la cronologia solo per l'articolo attivo
+              Array.isArray(history) && (
                 <div className="article-details">
-                  {/* Modifica: contenitore per i dettagli */}
                   <h3>History</h3>
                   <ul>
                     {history.map((entry) => (
@@ -142,78 +197,138 @@ const ArticleList = () => {
                   </ul>
                 </div>
               )}
-            {activeArticleId === article.id &&
-              statistics && ( //mostra le statistiche solo per l'articolo "attivo"
-                <div className="article-details">
-                  {/* Modifica: contenitore per i dettagli */}
-                  <h3>Statistics</h3>
-                  <p>Total Actions: {statistics.total_actions}</p>
-                  <p>Total Created: {statistics.total_created}</p>
-                  <p>Total Updated: {statistics.total_updated}</p>
-                  <p>Total Deleted: {statistics.total_deleted}</p>
-                </div>
-              )}
+            {activeArticleId === article.id && statistics && (
+              <div className="article-details">
+                <h3>Statistics</h3>
+                <p>Total Actions: {statistics.total_actions}</p>
+                <p>Total Created: {statistics.total_created}</p>
+                <p>Total Updated: {statistics.total_updated}</p>
+                <p>Total Deleted: {statistics.total_deleted}</p>
+              </div>
+            )}
           </div>
         ))}
       </div>
-      {editingArticle && (
-        <form onSubmit={handleUpdate}>
-          <div>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={editingArticle.name}
-                onChange={handleChange}
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Description:
-              <input
-                type="text"
-                name="description"
-                value={editingArticle.description}
-                onChange={handleChange}
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Quantity:
-              <input
-                type="number"
-                name="quantity"
-                value={editingArticle.quantity}
-                onChange={handleChange}
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Size:
-              <select
-                name="size"
-                value={editingArticle.size}
-                onChange={handleChange}
-                required
-              >
-                <option value="L">L</option>
-                <option value="M">M</option>
-                <option value="S">S</option>
-              </select>
-            </label>
-          </div>
-          <button type="submit">Update Article</button>
-        </form>
-      )}
     </div>
   );
 };
 
 export default ArticleList;
+
+//   return (
+//     <div>
+//       <h1>Articles</h1>
+//       <div className="article-list">
+//         {/*contenitore per la list degli articoli */}
+//         {articles.map((article) => (
+//           <div className="article" key={article.id}>
+//             {/* "?classe" per ogni articolo */}
+//             <div className="article-content">
+//               {/* contenitore per il contenuto "principale" */}
+//               <h2>{article.name}</h2>
+//               <p>{article.description}</p>
+//               <p>Quantity: {article.quantity}</p>
+//               <p>Size: {article.size}</p>
+//               <div className="article-buttons">
+//                 {/*contenitore per i pulsanti */}
+//                 <button onClick={() => handleEdit(article)}>Edit</button>
+//                 <button onClick={() => handleDelete(article.id)}>Delete</button>
+//                 <button onClick={() => viewHistory(article.id)}>
+//                   View History
+//                 </button>
+//                 <button onClick={() => viewStatistics(article.id)}>
+//                   View Statistics
+//                 </button>
+//               </div>
+//             </div>
+//             {activeArticleId === article.id &&
+//               history &&
+//               Array.isArray(history) && ( //mostra la cronologia solo per l'articolo attivo
+//                 <div className="article-details">
+//                   {/* Modifica: contenitore per i dettagli */}
+//                   <h3>History</h3>
+//                   <ul>
+//                     {history.map((entry) => (
+//                       <li key={entry.id}>
+//                         {entry.action_date}: {entry.action_type} -{" "}
+//                         {entry.details}
+//                       </li>
+//                     ))}
+//                   </ul>
+//                 </div>
+//               )}
+//             {activeArticleId === article.id &&
+//               statistics && ( //mostra le statistiche solo per l'articolo "attivo"
+//                 <div className="article-details">
+//                   {/* Modifica: contenitore per i dettagli */}
+//                   <h3>Statistics</h3>
+//                   <p>Total Actions: {statistics.total_actions}</p>
+//                   <p>Total Created: {statistics.total_created}</p>
+//                   <p>Total Updated: {statistics.total_updated}</p>
+//                   <p>Total Deleted: {statistics.total_deleted}</p>
+//                 </div>
+//               )}
+//           </div>
+//         ))}
+//       </div>
+//       {editingArticle && (
+//         <form onSubmit={handleUpdate}>
+//           <div>
+//             <label>
+//               Name:
+//               <input
+//                 type="text"
+//                 name="name"
+//                 value={editingArticle.name}
+//                 onChange={handleChange}
+//                 required
+//               />
+//             </label>
+//           </div>
+//           <div>
+//             <label>
+//               Description:
+//               <input
+//                 type="text"
+//                 name="description"
+//                 value={editingArticle.description}
+//                 onChange={handleChange}
+//                 required
+//               />
+//             </label>
+//           </div>
+//           <div>
+//             <label>
+//               Quantity:
+//               <input
+//                 type="number"
+//                 name="quantity"
+//                 value={editingArticle.quantity}
+//                 onChange={handleChange}
+//                 required
+//               />
+//             </label>
+//           </div>
+//           <div>
+//             <label>
+//               Size:
+//               <select
+//                 name="size"
+//                 value={editingArticle.size}
+//                 onChange={handleChange}
+//                 required
+//               >
+//                 <option value="L">L</option>
+//                 <option value="M">M</option>
+//                 <option value="S">S</option>
+//               </select>
+//             </label>
+//           </div>
+//           <button type="submit">Update Article</button>
+//         </form>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ArticleList;

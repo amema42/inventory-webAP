@@ -33,56 +33,58 @@ function App() {
   return (
     <div>
       <h1>Inventory App v.0.1</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Description:
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Quantity:
-            <input
-              type="number"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Size:
-            <select
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-              required
-            >
-              <option value="L">L</option>
-              <option value="M">M</option>
-              <option value="S">S</option>
-            </select>
-          </label>
-        </div>
-        <button type="submit">Add Article</button>
-      </form>
+      <div className="formSubmit">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>
+              Name:
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Description:
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Quantity:
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Size:
+              <select
+                value={size}
+                onChange={(e) => setSize(e.target.value)}
+                required
+              >
+                <option value="L">L</option>
+                <option value="M">M</option>
+                <option value="S">S</option>
+              </select>
+            </label>
+          </div>
+          <button type="submit">Add Article</button>
+        </form>
+      </div>
       <ArticleList />{" "}
       {/* dopo il casino di struttura sopra, aggiungo Article List qui (da Sistemare in FrontEnd) */}
     </div>
