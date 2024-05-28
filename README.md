@@ -58,7 +58,7 @@ inventory-WebAPP_v1.0/
     ├── src/
     │   ├── App.js
     │   ├── index.js
-    │   └── Articlelist.js
+    │   └── ArticleList.js
 ```
 
 ## Setting Up the Project
