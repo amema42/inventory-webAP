@@ -46,7 +46,7 @@ Detail the structure of the project directories and files.
 ## Project Structure
 ```
 ```
-inventory-webAPP_v0/
+inventory-webAPP_v1.0/
 │
 ├── database/
 │   └── init.sql
