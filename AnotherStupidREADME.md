@@ -21,7 +21,7 @@ inventory-webAPP_v1.0/
     │   ├── index.js
 ```
 
-### Mappa Mentale Dettagliata
+### Mappa Dettagliata del Progetto
 
 1. **Directory `database`**
     - **init.sql**
