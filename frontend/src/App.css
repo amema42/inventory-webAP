@@ -39,7 +39,7 @@
 
 body {
     /*font-family: Arial, sans-serif;*/
-    font-family: "Comic Sans MS", cursive;
+    /*font-family: "Comic Sans MS", cursive; */
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
@@ -57,10 +57,10 @@ h1 {
 form {
     border: 1px solid black; /*adding a border for every article/card */
     background-color: #fff;
-    padding: 10px;
+    padding: 20px;
     margin: auto; /*imposto questo in : auto - mi risolve tutti i problemi, forse dovrei studiarlo un minimo CSS*/
     /*margin-bottom: 10px;*/
-    border-radius: 8px;
+    border-radius: 0px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     box-sizing: border-box; /*include padding e bordo in larghezza e altezza*/
     flex: 1 1 calc(33.333% - 20px); /* 3 periodc - gap? (aggiusta la larghezza delle colonne per visualizzare gli articoli per riga, flex: 3 articoli per riga)*/
@@ -86,14 +86,14 @@ select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 0px;
     box-sizing: border-box;
 }
 
 button {
     width: 100%; /*Imposta larghezza al 100% per coprire il contenitore */
     padding: 10px;
-    background-color: #007bff;
+    background-color: #000;
     color: white;
     border: none;
     /* border-radius: 4px; */
@@ -118,7 +118,7 @@ button:hover {
     padding: 10px;
     margin: auto; /*imposto questo in : auto - mi risolve tutti i problemi, forse dovrei studiarlo un minimo CSS*/
     /*margin-bottom: 10px;*/
-    border-radius: 8px;
+    border-radius: 0px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     box-sizing: border-box; /*include padding e bordo in larghezza e altezza*/
     flex: 1 1 calc(33.333% - 20px); /* 3 periodc - gap? (aggiusta la larghezza delle colonne per visualizzare gli articoli per riga, flex: 3 articoli per riga)*/
@@ -135,7 +135,7 @@ article-details {
 }
 .article h2 {
     margin-top: 0;
-    color: #007bff;
+    color: #000;
 }
 
 .article p {

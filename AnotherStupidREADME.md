@@ -1,11 +1,11 @@
-# `inventory WebAPP` v1.0
+# `Inventory WebAPP` v1.0
 
 ### another stupid BUT very specific readme - the logic behind this project
 
 ### Struttura Generale del Progetto
 
 ```
-inventory-webAPP_v1.0/
+Inventory-WebAPP_v1.0/
 │
 ├── database
 │   └── init.sql
@@ -113,7 +113,7 @@ inventory-webAPP_v1.0/
 ### Diagramma Logico Completo
 
 ```markdown
-inventory-webAPP_v1.0/
+Inventory WebApp v1.0/
 │
 ├── database
 │   └── init.sql

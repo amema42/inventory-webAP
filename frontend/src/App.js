@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ArticleList from "./ArticleList"; // import: componente ArticleList, definito in src/ArticleList.js
+import { FontProvider, FontContext } from "./FontContext";
+import ChangeFontButton from "./ChangeFontButton";
 import "./App.css"; //importing style in CSS
 
-function App() {
+/* implementing the FontChange*/
+const App = () => {
+  return (
+    <FontProvider>
+      <MainApp />
+    </FontProvider>
+  );
+};
+
+const MainApp = () => {
+  const { font } = useContext(FontContext); // rr.1 - added useContext
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -31,8 +44,13 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Inventory App v.0.1</h1>
+    <div style={{ fontFamily: font }}>
+      {" "}
+      {/* applica il font dal contesto / rr. 1: useContext & ./changeFontButton */}
+      <div className="container">
+        <ChangeFontButton />
+      </div>
+      <h1>Inventory WebApp v1.0</h1>
       <div className="formSubmit">
         <form onSubmit={handleSubmit}>
           <div>
@@ -85,10 +103,9 @@ function App() {
           <button type="submit">Add Article</button>
         </form>
       </div>
-      <ArticleList />{" "}
-      {/* dopo il casino di struttura sopra, aggiungo Article List qui (da Sistemare in FrontEnd) */}
+      <ArticleList />
     </div>
   );
-}
+};
 
 export default App;

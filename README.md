@@ -12,7 +12,7 @@ A high-level overview of the project, including its purpose, main features, and 
 
 **Example:**
 ```
-# Inventory Web Application
+# Inventory Web Application - Inventory WebApp v1.0
 
 ## Overview
 This inventory web application allows users to manage and track their inventory items. It includes a frontend built with React, a backend using Node.js and Express, and a PostgreSQL database. The application is dockerized for easy deployment.
@@ -46,7 +46,7 @@ Detail the structure of the project directories and files.
 ## Project Structure
 ```
 ```
-inventory-WebAPP_v1.0/
+Inventory WebApp v1.0/
 │
 ├── database/
 │   └── init.sql
