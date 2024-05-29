@@ -1,6 +1,6 @@
 # `inventory WebAPP` v1.0
 
-### another stupid readme - the logic behind this project
+### another stupid BUT very specific readme - the logic behind this project
 
 ### Struttura Generale del Progetto
 
